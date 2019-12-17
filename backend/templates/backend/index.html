@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<div class="col-md-12">
+		<p>Bienvenue <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+		{% if messages %}
+			 {% for message in messages %}
+			 	<div>{{ message }}</div>
+			 {% endfor %}
+		{% endif %}
+		{% if user.is_sitter %}
+		<h2>Mes réservations </h2>
+			{% for booking in bookings %}
+				<div>
+					{{ booking.parent.first_name }} {{ booking.parent.last_name }} {{ booking.date.date|date }}
+				</div>
+			{% empty %}
+				<div>Aucune réservation</div>
+			{% endfor %}
+		 {% endif %}
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			{% if user.is_parent %}
+			  <li class="nav-item">
+			    <a class="nav-link active" id="parent-tab" data-toggle="tab" href="#parent" role="tab" aria-controls="home"
+			      aria-selected="true">Parent</a>
+			  </li>
+			{% endif %}
+			{% if user.is_sitter %}
+			  <li class="nav-item">
+			    <a class="nav-link" id="sitter-tab" data-toggle="tab" href="#sitter" role="tab" aria-controls="profile"
+			      aria-selected="false">Sitter</a>
+			  </li>
+			{% endif %}
+		</ul>
+		<div class="tab-content col-md-4" id="myTabContent">
+		  <div class="tab-pane fade show active" id="parent" role="tabpanel" aria-labelledby="parent-tab">
+		  	<h2>Réservations faites</h2>
+		  	{% for booking in bookings_made %}
+				<div>
+					{{ booking.sitter.first_name }} {{ booking.sitter.last_name }} {{ booking.date.date|date }}
+					{% if not booking.date.has_passed %}
+						<a class="btn btn-info" href="{% url 'give-feedback' sitter_id=booking.sitter.id booking_id=booking.id %}">Noter le service</a>
+					{% endif %}
+				</div>
+			{% empty %}
+				<div>Aucune réservation faite</div>
+			{% endfor %}
+		   </div>
+		  <div class="tab-pane fade" id="sitter" role="tabpanel" aria-labelledby="sitter-tab">
+		    <form method="post" action="{% url 'add-schedule' %}" class="text-center border border-light p-5">
+		    	{% csrf_token %}
+		    	<input type="date" class="form-control" placeholder="Soirs disponibles" name='date'>
+		    	<button type="submit" class="btn btn-info btn-block my-4">Ajouter</button>
+		    </form>
+		   	<form method="post" action="{%url 'set-pricing' %}" class="text-center border border-light p-5">
+		   		{% csrf_token %}
+		    	<input type="number" class="form-control" placeholder="Tarif Horaire" name='price'>
+		    	<button type="submit" class="btn btn-info btn-block my-4">Valider</button>
+		    </form>
+		</div>
+		</div>
+	</div>
+{% endblock %}

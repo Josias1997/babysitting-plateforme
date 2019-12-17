@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="col-md-6 mt-5">
+		<!-- Default form contact -->
+<form class="text-center border border-light p-5" action="{% url 'send-feedback' %}" method="post">
+	{% csrf_token %}
+    <p class="h4 mb-4">Donnez votre avis</p>
+    <input type="hidden" value="{{ sitter_id }}" name="sitter_id" />
+    <input type="hidden" value="{{ booking_id }}" name="booking_id" />
+    <!-- Email -->
+    <input name="mark" type="number" max=10 min=0 id="mark" class="form-control mb-4" placeholder="Note">
+
+    <!-- Message -->
+    <div class="form-group">
+        <textarea name="feedback" class="form-control rounded-0" id="feedback" rows="3" placeholder="Message"></textarea>
+    </div>
+
+    <!-- Send button -->
+    <button class="btn btn-info btn-block" type="submit">Envoyer</button>
+
+</form>
+<!-- Default form contact -->
+	</div>
+{% endblock %}

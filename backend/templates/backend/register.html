@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Default form login -->
+<div class="col-md-5 mt-5">
+    {% if messages %}
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+<!-- Default form register -->
+<form class="text-center border border-light p-5" action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+
+    <p class="h4 mb-4">Inscription</p>
+
+    <div class="form-row mb-4">
+        <div class="col">
+            <!-- First name -->
+            <input type="text" id="firstName" class="form-control" placeholder="Nom" name="firstName">
+        </div>
+        <div class="col">
+            <!-- Last name -->
+            <input type="text" id="lastName" class="form-control" placeholder="Prénom" name="lastName">
+        </div>
+    </div>
+
+    <!-- E-mail -->
+    <input type="text" id="email" class="form-control mb-4" placeholder="Nom d'utilisateur" name="login">
+     <!-- E-mail -->
+    <input type="email" id="email" class="form-control mb-4" placeholder="E-mail" name="email">
+
+    <!-- Password -->
+    <input type="password" id="password" class="form-control" placeholder="Mot de passe" name="password">
+
+    <input type="password" id="cPassord" class="form-control mt-3" placeholder="Confirmer le Mot de passe" name="cPassword">
+
+    <!-- Default unchecked -->
+    <div class="form-row mt-3">
+        <div class="custom-control custom-checkbox ml-2">
+            <input type="checkbox" class="custom-control-input" id="parent" name="parent">
+            <label class="custom-control-label" for="parent">Parent</label>
+        </div>
+        <div class="custom-control custom-checkbox ml-2">
+            <input type="checkbox" class="custom-control-input" id="sitter" name="sitter">
+            <label class="custom-control-label" for="sitter">Sitter</label>
+        </div>
+    </div>
+    <!-- Sign up button -->
+    <button class="btn btn-info my-4 btn-block" formmethod="post" type="submit">Valider</button>
+     <!-- Register -->
+    <p>
+        <a href="{% url 'login' %}">Connexion</a>
+    </p>
+
+</form>
+<!-- Default form register -->
+		
+	</div>
+{% endblock %}

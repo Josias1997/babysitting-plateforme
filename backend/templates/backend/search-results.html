@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="col-md-12">
+		{% for sitter in sitters %}
+		 	<strong>{{ sitter.first_name }} {{ sitter.last_name }}</strong>
+		 	{% ifnotequal sitter.avg_mark 0.0 %} 
+		 		<strong>{{ sitter.avg_mark }}</strong>
+		 	{% else %} 
+		 		<strong>Aucune note pour le moment</strong>
+		 	{% endifnotequal %}
+		 	<a class="btn btn-info" href="{% url 'book-sitter' parent_id=user.id sitter_id=sitter.id date=date %}">Réserver</a>
+		 	{% empty %}
+		 	<h2>Aucun sitter n'est disponible pour cette date</h2>
+		{% endfor %}
+	</div>
+{% endblock %}
