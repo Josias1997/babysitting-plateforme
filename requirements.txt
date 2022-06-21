@@ -7,7 +7,7 @@ django-rest-auth==0.9.5
 djangorestframework==3.10.3
 Jinja2==2.10.3
 MarkupSafe==1.1.1
-numpy==1.17.2
+numpy==1.22.0
 pandas==0.25.1
 pandasql==0.7.3
 Pillow==6.1.0
